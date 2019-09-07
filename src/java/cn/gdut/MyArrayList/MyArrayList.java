@@ -75,6 +75,7 @@ public class MyArrayList<E> {
         return true;
     }
 
+
     /**
      * 判断是否合法
      * @param minCapacity 容量
@@ -83,6 +84,7 @@ public class MyArrayList<E> {
         if (elementDate == DEFAULTCAPACITY_EMPTY_ELEMENTDATA){
             minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);
         }
+        // 如果长度不能满足需求，则需要扩充了。
         if (minCapacity - elementDate.length > 0){
             grow(minCapacity);
         }
@@ -124,6 +126,9 @@ public class MyArrayList<E> {
 
     /**
      * 在特定位置插入元素
+     * 先判断参数是否合法
+     * 然后确保elementData数组长度的合法性
+     * 然后将后面的元素的往后移动一位，留出一个空间供e插入
      * @param index index
      * @param element 元素
      */
@@ -163,7 +168,7 @@ public class MyArrayList<E> {
     }
 
     /**
-     * 通过索引直接获取值
+     * 通过索引直接获取值。需要向下转型Object-> E转型
      * @param index 索引
      * @return 当前索引的值
      */
@@ -198,7 +203,7 @@ public class MyArrayList<E> {
     }
 
     /**
-     * 更新元素，将指定位置的元素更新为新的值,并且返回旧的值
+     * 更新元素，将指定位置的元素更新为新的值,并且返回旧的值。
      * @param index 索引
      * @param element 更新的值
      * @return 被替换的值
@@ -212,6 +217,9 @@ public class MyArrayList<E> {
 
     /**
      * 查找特定元素出现的第一个位置
+     * 算法实现是遍历数组。
+     * 其中o可以为null，当为null是，判断方式是==。否则是elementData[i].equal。
+     * 否则是elementData[i].equal。
      * @param o 元素
      * @return 索引
      */
@@ -233,9 +241,46 @@ public class MyArrayList<E> {
         return -1;
     }
 
+    /**
+     * 返回元素为o的最后的索引
+     * @param o 元素
+     * @return 索引
+     */
+    public int lastIndexOf(Object o){
+        if (o == null){
+            for (int i = size - 1;i >= 0; i++){
+                if (elementDate[i] == null){
+                    return i;
+                }
+            }
+        }
+        else {
+            for (int i = size - 1;i >= 0;i++){
+                if (elementDate[i].equals(o)){
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 先判断索引的合法性，再通过elementDate方法获取元素
+     * @param index 索引
+     * @return 查找的值
+     */
     public E get(int index){
         rangeCheck(index);
         return elementDate(index);
+    }
+
+    /**
+     * 判断元素是否存在ArrayList中
+     * @param o 元素
+     * @return 结果
+     */
+    public boolean contain(Object o){
+        return indexOf(o) >= 0;
     }
 
     public static void main(String[] args) {
@@ -244,11 +289,11 @@ public class MyArrayList<E> {
             myArrayList.add("a");
         }
         myArrayList.add(10,"d");
-        myArrayList.add("3");
-        System.out.println(myArrayList.set(11,'1'));
-        System.out.println(myArrayList.indexOf(null));
-        System.out.println(myArrayList.get(12));
+        myArrayList.add(null);
+        System.out.println(myArrayList.set(10,'1'));
+        System.out.println(myArrayList.lastIndexOf(null));
+        System.out.println(myArrayList.get(10));
 //        myArrayList.remove(10);
-//        System.out.println(myArrayList);
+        System.out.println(myArrayList);
     }
 }
