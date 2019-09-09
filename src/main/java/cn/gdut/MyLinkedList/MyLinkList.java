@@ -1,7 +1,8 @@
-package cn.gdut.MyArrayList;
+package cn.gdut.MyLinkedList;
 
 
 import java.util.Collection;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class MyLinkList<E> {
@@ -76,7 +77,7 @@ public class MyLinkList<E> {
     void linkLast(E e){
         final Node<E> l = last;
         // 新建一个节点
-        final Node<E> newNode = new Node<>(l, e, null);
+        final Node<E> newNode = new Node<E>(l, e, null);
         last = newNode;
         // 如果没有一个节点。如果没有，则newNode即是头节点也是尾节点
         if (l == null){
@@ -147,7 +148,7 @@ public class MyLinkList<E> {
      */
     private void linkFirst(E e){
         final Node<E> f = first;
-        final Node<E> newNode = new Node<>(null, e, f);
+        final Node<E> newNode = new Node<E>(null, e, f);
         first = newNode;
         if (f == null){
             last = newNode;
@@ -179,7 +180,7 @@ public class MyLinkList<E> {
      */
     void linkBefore(E e, Node<E> succ){
         Node<E> pred = succ.prev;
-        Node<E> newNode = new Node<>(pred, e, succ);
+        Node<E> newNode = new Node<E>(pred, e, succ);
         succ.prev = newNode;
         if (pred == null){
             first = newNode;
@@ -259,6 +260,20 @@ public class MyLinkList<E> {
         // 索引判断
         checkElementIndex(index);
         return node(index).item;
+    }
+
+    /**
+     *
+     * @param index
+     * @param elemnet
+     * @return
+     */
+    public E set(int index, E elemnet){
+        checkElementIndex(index);
+        Node<E> x = node(index);
+        E oldValue = x.item;
+        x.item = elemnet;
+        return oldValue;
     }
 
     /**
@@ -465,7 +480,8 @@ public class MyLinkList<E> {
 //        myLinkList.offerFirst("first");
 //        myLinkList.offerLast("last");
 //        System.out.println(myLinkList.pollFirst());
-        System.out.println(myLinkList.pollLast());
+//        System.out.println(myLinkList.pollLast());
+        myLinkList.set(1,"fi");
         myLinkList.printLinkedList();
 //        System.out.println(myLinkList.printLinkedList());
 //        System.out.println(myLinkList.peekFirst());
